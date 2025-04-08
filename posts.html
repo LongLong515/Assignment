@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Join the Fragpunk community discussions. Share strategies, tips, and connect with other players.">
+    <meta name="keywords" content="Fragpunk community, gaming discussions, player tips, strategy sharing">
+    <title>Fragpunk Community - Share Your Experience</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .post-form {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .post-form textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--accent-cyan);
+            color: var(--text-white);
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        .post-form button {
+            background-color: var(--accent-purple);
+            color: var(--text-white);
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .post-form button:hover {
+            background-color: var(--accent-cyan);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .logo span {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--accent-cyan);
+        }
+
+        .posts-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .post {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .post-author {
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .post-date {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .post-content {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .post-action {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .post-action:hover {
+            color: var(--accent-cyan);
+        }
+
+        .post-action.liked {
+            color: var(--accent-purple);
+        }
+
+        .like-count {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        .post-action.liked .like-count {
+            color: var(--accent-purple);
+        }
+
+        .comment-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-cyan);
+            display: none;
+        }
+
+        .comment-section.active {
+            display: block;
+        }
+
+        .comment-form {
+            margin-bottom: 1rem;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--accent-cyan);
+            color: var(--text-white);
+            border-radius: 4px;
+            resize: vertical;
+            min-height: 60px;
+        }
+
+        .comment-form button {
+            background-color: var(--accent-purple);
+            color: var(--text-white);
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .comment-form button:hover {
+            background-color: var(--accent-cyan);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comment {
+            background-color: var(--bg-dark);
+            padding: 1rem;
+            border-radius: 4px;
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .comment-date {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+        }
+
+        .comment-content {
+            line-height: 1.4;
+        }
+        .social-links {
+    margin-top: 20px; /* Adjust the value as needed */
+}
+    </style>
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="uploads/logo.jpg" alt="Fragpunk Logo">
+                <span>FRAGPUNK</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="characters.html">Characters</a></li>
+                <li><a href="posts.html" class="active">Community</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="community-section">
+            <h1 style="margin-top: 40px;">Community Discussions</h1>
+            <p class="section-intro">Share your experiences, strategies, and connect with other Fragpunk players.</p>
+
+            <form class="post-form" id="postForm">
+                <textarea placeholder="Share your thoughts with the community..." required></textarea>
+                <button type="submit">Post</button>
+            </form>
+
+            <div class="posts-container" id="postsContainer">
+                <!-- Example posts -->
+                <article class="post">
+                    <div class="post-header">
+                        <span class="post-author">ProGamer123</span>
+                        <span class="post-date">2 hours ago</span>
+                    </div>
+                    <div class="post-content">
+                        <p>Just discovered an amazing combo with Broker's Tactical Shield and Nitro's Speed Burst. The synergy is incredible for objective control!</p>
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action like-action" data-likes="12">
+                            <i class="fas fa-heart"></i>
+                            <span class="like-count">12</span>
+                        </div>
+                        <div class="post-action comment-action">
+                            <i class="fas fa-comment"></i>
+                            <span>Comment</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-share"></i>
+                            <span>Share</span>
+                        </div>
+                    </div>
+                    <div class="comment-section">
+                        <div class="comment-form">
+                            <textarea placeholder="Write a comment..."></textarea>
+                            <button type="button" class="submit-comment">Post Comment</button>
+                        </div>
+                        <div class="comments-list">
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <span class="comment-author">GameFan99</span>
+                                    <span class="comment-date">1 hour ago</span>
+                                </div>
+                                <div class="comment-content">
+                                    <p>That's a great strategy! I've been using it in ranked matches with good success.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="post">
+                    <div class="post-header">
+                        <span class="post-author">FragMaster</span>
+                        <span class="post-date">5 hours ago</span>
+                    </div>
+                    <div class="post-content">
+                        <p>Looking for a team to practice competitive strategies. Anyone interested in forming a squad?</p>
+                    </div>
+                    <div class="post-actions">
+                        <div class="post-action like-action" data-likes="8">
+                            <i class="fas fa-heart"></i>
+                            <span class="like-count">8</span>
+                        </div>
+                        <div class="post-action comment-action">
+                            <i class="fas fa-comment"></i>
+                            <span>Comment</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-share"></i>
+                            <span>Share</span>
+                        </div>
+                    </div>
+                    <div class="comment-section">
+                        <div class="comment-form">
+                            <textarea placeholder="Write a comment..."></textarea>
+                            <button type="button" class="submit-comment">Post Comment</button>
+                        </div>
+                        <div class="comments-list">
+                            <div class="comment">
+                                <div class="comment-header">
+                                    <span class="comment-author">TeamPlayer</span>
+                                    <span class="comment-date">3 hours ago</span>
+                                </div>
+                                <div class="comment-content">
+                                    <p>I'm interested! What's your rank?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Connect With Us</h4>
+                <div class="social-links">
+                    <a href="#" class="social-icon">Discord</a>
+                    <a href="#" class="social-icon">Twitter</a>
+                    <a href="#" class="social-icon">YouTube</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <p style="margin-top:45px;">&copy; 2024 Fragpunk Fan Site. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Like functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event to all like buttons
+            document.querySelectorAll('.like-action').forEach(likeButton => {
+                likeButton.addEventListener('click', function() {
+                    const likeCount = this.querySelector('.like-count');
+                    const currentLikes = parseInt(likeCount.textContent);
+                    
+                    if (this.classList.contains('liked')) {
+                        // Unlike
+                        likeCount.textContent = currentLikes - 1;
+                        this.classList.remove('liked');
+                        this.querySelector('i').classList.remove('fas');
+                        this.querySelector('i').classList.add('far');
+                    } else {
+                        // Like
+                        likeCount.textContent = currentLikes + 1;
+                        this.classList.add('liked');
+                        this.querySelector('i').classList.remove('far');
+                        this.querySelector('i').classList.add('fas');
+                    }
+                });
+            });
+
+            // Comment functionality
+            document.querySelectorAll('.comment-action').forEach(commentButton => {
+                commentButton.addEventListener('click', function() {
+                    const commentSection = this.closest('.post').querySelector('.comment-section');
+                    commentSection.classList.toggle('active');
+                });
+            });
+
+            // Submit comment functionality
+            document.querySelectorAll('.submit-comment').forEach(button => {
+                button.addEventListener('click', function() {
+                    const commentForm = this.closest('.comment-form');
+                    const textarea = commentForm.querySelector('textarea');
+                    const content = textarea.value.trim();
+                    
+                    if (content) {
+                        const commentsList = this.closest('.comment-section').querySelector('.comments-list');
+                        const comment = createComment(content);
+                        commentsList.appendChild(comment);
+                        textarea.value = '';
+                    }
+                });
+            });
+        });
+
+        function createComment(content) {
+            const comment = document.createElement('div');
+            comment.className = 'comment';
+            
+            const now = new Date();
+            const timeString = 'Just now';
+            
+            comment.innerHTML = `
+                <div class="comment-header">
+                    <span class="comment-author">You</span>
+                    <span class="comment-date">${timeString}</span>
+                </div>
+                <div class="comment-content">
+                    <p>${content}</p>
+                </div>
+            `;
+            
+            return comment;
+        }
+
+        // Simple post functionality
+        document.getElementById('postForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const textarea = this.querySelector('textarea');
+            const content = textarea.value;
+            
+            if (content.trim()) {
+                const post = createPost(content);
+                document.getElementById('postsContainer').insertBefore(
+                    post,
+                    document.getElementById('postsContainer').firstChild
+                );
+                textarea.value = '';
+            }
+        });
+
+        function createPost(content) {
+            const post = document.createElement('article');
+            post.className = 'post';
+            
+            const now = new Date();
+            const timeString = 'Just now';
+            
+            post.innerHTML = `
+                <div class="post-header">
+                    <span class="post-author">You</span>
+                    <span class="post-date">${timeString}</span>
+                </div>
+                <div class="post-content">
+                    <p>${content}</p>
+                </div>
+                <div class="post-actions">
+                    <div class="post-action like-action" data-likes="0">
+                        <i class="far fa-heart"></i>
+                        <span class="like-count">0</span>
+                    </div>
+                    <div class="post-action comment-action">
+                        <i class="fas fa-comment"></i>
+                        <span>Comment</span>
+                    </div>
+                    <div class="post-action">
+                        <i class="fas fa-share"></i>
+                        <span>Share</span>
+                    </div>
+                </div>
+                <div class="comment-section">
+                    <div class="comment-form">
+                        <textarea placeholder="Write a comment..."></textarea>
+                        <button type="button" class="submit-comment">Post Comment</button>
+                    </div>
+                    <div class="comments-list">
+                    </div>
+                </div>
+            `;
+            
+            // Add like functionality to the new post
+            const likeButton = post.querySelector('.like-action');
+            likeButton.addEventListener('click', function() {
+                const likeCount = this.querySelector('.like-count');
+                const currentLikes = parseInt(likeCount.textContent);
+                
+                if (this.classList.contains('liked')) {
+                    // Unlike
+                    likeCount.textContent = currentLikes - 1;
+                    this.classList.remove('liked');
+                    this.querySelector('i').classList.remove('fas');
+                    this.querySelector('i').classList.add('far');
+                } else {
+                    // Like
+                    likeCount.textContent = currentLikes + 1;
+                    this.classList.add('liked');
+                    this.querySelector('i').classList.remove('far');
+                    this.querySelector('i').classList.add('fas');
+                }
+            });
+            
+            return post;
+        }
+    </script>
+</body>
+</html> 
